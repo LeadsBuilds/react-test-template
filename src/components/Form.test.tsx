@@ -7,7 +7,11 @@ import { RecoilRoot } from "recoil";
 
 test('when input is empty, new attendees cannot be added.', () => {
 
-    render(<Form />);
+    render(
+        <RecoilRoot>
+            <Form />
+        </RecoilRoot>
+    );
 
     // find input element in the DOM
     const input = screen.getByPlaceholderText('Type here the name of the attendees');
@@ -50,6 +54,45 @@ test('add new attendee if the input is filled up', () => {
 
     // make sure the input is empty
     expect(input).toHaveValue("");
+});
+
+test('duplicated names cannot get added to the list', () => {
+    render(
+        <RecoilRoot>
+            <Form />
+        </RecoilRoot>
+    );
+
+    // find input element in the DOM
+    const input = screen.getByPlaceholderText('Type here the name of the attendees');
+    
+    // find the button element
+    const button = screen.getByRole('button');
+
+    // insert a input value
+    fireEvent.change(input, {
+        target: {
+            value: 'John Smith'
+        }
+    });
+
+    // click on the submit button
+    fireEvent.click(button);
+
+    // insert a input value
+    fireEvent.change(input, {
+        target: {
+            value: 'John Smith'
+        }
+    });
+
+    // click on the submit button
+    fireEvent.click(button);
+
+    const errorMessage = screen.getByRole('alert');
+
+    expect(errorMessage.textContent).toBe('Duplicated names are not allowed');
+
 });
 
 
