@@ -9,6 +9,10 @@ export const useAddAttendee = () => {
     return (attendeeName: string) => {
         if (list.includes(attendeeName)) {
             setError('Duplicated names are not allowed');
+
+            setTimeout(() => {
+                setError('');
+            }, 5000);
             return; 
         }
         return setList(currentList => [...currentList, attendeeName]);
