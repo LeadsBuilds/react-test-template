@@ -11,10 +11,17 @@ jest.mock('../state/hooks/useAttendeeList', () => {
 });
 
 const mockNavigate = jest.fn();
+const mockShuffle = jest.fn();
 
 jest.mock('react-router-dom', () => {
     return {
         useNavigate: () => mockNavigate
+    }
+});
+
+jest.mock('../state/hooks/useShuffle', () => {
+    return {
+        useShuffle: () => mockShuffle
     }
 });
 
@@ -66,5 +73,6 @@ describe("When there are enough attendees", () => {
 
         expect(mockNavigate).toHaveBeenCalledTimes(1);
         expect(mockNavigate).toHaveBeenCalledWith('/shuffle');
+        expect(mockShuffle).toHaveBeenCalledTimes(1);
     });
 });
