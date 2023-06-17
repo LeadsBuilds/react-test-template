@@ -9,3 +9,8 @@ export const errorState = atom<string>({
   key: 'errorState',
   default: ''
 });
+
+export const resultShuffle = atom<Map<string, string>>({
+  key: 'resultShuffle',
+  default: new Map()
+});
